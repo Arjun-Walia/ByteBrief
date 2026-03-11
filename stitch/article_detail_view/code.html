@@ -1,0 +1,146 @@
+<html class="dark"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#197fe6",
+            "background-light": "#f6f7f8",
+            "background-dark": "#111921",
+          },
+          fontFamily: {
+            "display": ["Inter"]
+          },
+          borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<header class="sticky top-0 z-10 flex items-center justify-between bg-background-light/80 dark:bg-background-dark/80 px-4 py-4 backdrop-blur-md">
+<button class="flex h-10 w-10 items-center justify-center rounded-full bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-slate-100">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex gap-2">
+<button class="flex h-10 w-10 items-center justify-center rounded-full bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-slate-100">
+<span class="material-symbols-outlined">share</span>
+</button>
+<button class="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">bookmark</span>
+</button>
+</div>
+</header>
+<main class="flex-1 px-4 pb-24">
+<div class="mt-4 @container">
+<div class="w-full overflow-hidden rounded-xl aspect-video bg-slate-200 dark:bg-slate-800" data-alt="Abstract neural network visualization with blue glowing nodes" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC29gTv1VVyu_ZOWJhR8Q0eKOF711wXoGzZptoKDpyLmEsM-AL3tTgloMVXKgp9Ogkf-mIJjLbot0YvpdsfTCPMVGE87db_UmFKhFYTM8D7nOPHrWo9G4IiLq9tQBaehaJ61wt74sgJmTS4dKY5_RzpFmOSCGamSB8fXcnqCF0Wy9fARiwpxrKb-u0tQukx-sNjNGcOLf3qwxpW4hIRG270LTo4PtUJVZEQDzQs3nmDOyahPLqq5oAxG1WzztHk7P9Rxx7TMCZMXVGM"); background-size: cover; background-position: center;'>
+</div>
+</div>
+<div class="mt-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="bg-primary/10 text-primary text-xs font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Technology</span>
+<span class="text-slate-500 dark:text-slate-400 text-xs font-medium">5 min read</span>
+</div>
+<h1 class="text-3xl font-bold leading-tight tracking-tight text-slate-900 dark:text-slate-100">
+          The Rise of Agentic AI: Beyond Simple Chatbots
+        </h1>
+<div class="mt-4 flex items-center gap-3">
+<div class="h-10 w-10 rounded-full bg-slate-300 dark:bg-slate-700 overflow-hidden">
+<img alt="Author" data-alt="Professional headshot of a male tech journalist" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA36QHAD1dH8QtZpoLODLC56r4mOMZ_17YcEMNeLDEEWZXUurfjb9eV8rnmHzQoa16Pw6Nd9yAUh6mvZRQGPA1hUIRL9yjPXFI5YiUahHHMSL33pj2p8Gdj_COF_9Ai9T_jMR4AISQOo03PifasynnS7EIsR0LIBD4N8EB0knc4SvgLnpwkAkups9QaIChym2CvhITSC82OXuXXrNr6_yfP8PlyufpHaBz618fHAMHLUlYQ1lvl08IaQGqQzJEUpxSXSjw5YZgFgMXn"/>
+</div>
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100">David Chen</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Senior Tech Analyst • May 24, 2024</p>
+</div>
+</div>
+</div>
+<div class="mt-8 space-y-6">
+<section class="rounded-xl border border-primary/20 bg-primary/5 p-5">
+<div class="flex items-center gap-2 mb-3 text-primary">
+<span class="material-symbols-outlined text-xl">auto_awesome</span>
+<h2 class="text-lg font-bold">AI Summary</h2>
+</div>
+<p class="text-slate-700 dark:text-slate-300 leading-relaxed text-sm">
+            Agentic AI marks a shift from passive models to active assistants that can plan, use tools, and complete multi-step tasks independently. Unlike traditional LLMs, these agents focus on goal-oriented execution within software ecosystems.
+          </p>
+</section>
+<section class="space-y-4">
+<h2 class="text-xl font-bold text-slate-900 dark:text-slate-100">Why it matters</h2>
+<ul class="space-y-4">
+<li class="flex gap-3">
+<div class="flex-shrink-0 mt-1">
+<span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+</div>
+<p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+<strong class="text-slate-900 dark:text-slate-100">Operational Efficiency:</strong> Businesses can automate complex workflows that previously required human oversight.
+              </p>
+</li>
+<li class="flex gap-3">
+<div class="flex-shrink-0 mt-1">
+<span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+</div>
+<p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+<strong class="text-slate-900 dark:text-slate-100">New Interface Paradigms:</strong> We are moving from "searching" to "instructing" as the primary way we interact with computers.
+              </p>
+</li>
+<li class="flex gap-3">
+<div class="flex-shrink-0 mt-1">
+<span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+</div>
+<p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+<strong class="text-slate-900 dark:text-slate-100">Economic Impact:</strong> Could potentially add trillions to the global economy by augmenting knowledge workers' productivity.
+              </p>
+</li>
+</ul>
+</section>
+<section class="space-y-4">
+<p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+            The transition from chatbots like ChatGPT to autonomous agents represents the next major milestone in the artificial intelligence roadmap. While earlier models were designed to respond to prompts with text, agentic systems are designed to interact with the world. They can browse the web, execute code, manage files, and even interact with other APIs to achieve a specific outcome set by the user.
+          </p>
+<p class="text-slate-700 dark:text-slate-300 leading-relaxed">
+            Major tech giants are already pivoting. With the introduction of specialized frameworks, developers are now building systems that don't just talk about doing work—they actually do it.
+          </p>
+</section>
+<div class="pt-6 border-t border-slate-200 dark:border-slate-800">
+<a class="flex items-center justify-between text-primary font-semibold hover:underline" href="#">
+<span>Read full story on ByteBrief Original</span>
+<span class="material-symbols-outlined">open_in_new</span>
+</a>
+</div>
+</div>
+</main>
+<nav class="fixed bottom-0 left-0 right-0 border-t border-slate-200 dark:border-slate-800 bg-background-light dark:bg-background-dark/95 backdrop-blur-lg px-4 pb-6 pt-3">
+<div class="mx-auto flex max-w-md items-center justify-between">
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="text-[10px] font-medium">Explore</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">article</span>
+<span class="text-[10px] font-medium">Reading</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</a>
+</div>
+</nav>
+</div>
+</body></html>

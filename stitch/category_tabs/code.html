@@ -1,0 +1,150 @@
+<html class="dark"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#197fe6",
+            "background-light": "#f6f7f8",
+            "background-dark": "#111921",
+          },
+          fontFamily: {
+            "display": ["Inter"]
+          },
+          borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<header class="sticky top-0 z-10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between px-6 h-16">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-400 cursor-pointer">menu</span>
+<h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-50">ByteBrief</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-400">search</span>
+</button>
+</div>
+</div>
+<nav class="px-6 flex gap-8 overflow-x-auto no-scrollbar">
+<a class="flex flex-col items-center pt-4 pb-3 border-b-2 border-primary text-primary font-semibold text-sm transition-all" href="#">
+        AI
+      </a>
+<a class="flex flex-col items-center pt-4 pb-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 font-medium text-sm transition-all" href="#">
+        Startups
+      </a>
+<a class="flex flex-col items-center pt-4 pb-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 font-medium text-sm transition-all" href="#">
+        Security
+      </a>
+<a class="flex flex-col items-center pt-4 pb-3 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 font-medium text-sm transition-all" href="#">
+        DevTools
+      </a>
+</nav>
+</header>
+<main class="flex-1 px-6 py-8 max-w-2xl mx-auto w-full">
+<div class="space-y-12">
+<article class="group cursor-pointer">
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-primary">
+<span>Featured</span>
+<span class="w-1 h-1 rounded-full bg-slate-400"></span>
+<span class="text-slate-500 dark:text-slate-400">2h ago</span>
+</div>
+<h2 class="text-2xl font-bold leading-tight text-slate-900 dark:text-slate-50 group-hover:text-primary transition-colors">
+            The Future of Generative AI in 2024: Beyond LLMs
+          </h2>
+<p class="text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-2">
+            As we move past the initial hype of chat interfaces, the next wave of generative AI focuses on agentic workflows and specialized vertical applications.
+          </p>
+<div class="flex items-center gap-4 mt-2">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a technology journalist" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0_xPHZGcoI3iU0s_KH0K7xKqe6LCVfXF8dNGzAg4lacq4Ib8q98kt9ur-wFGhLasmuVPOECdAz40RDw0UIWOo_Oa-VvCep24YD1ps2v-ruUFzTUMGKPzRWtIfOnWZhaGvfWE0aHhLrUz_0_ou4Epwdyh_EfNcrosGV_eQInP01FBlm2NOQAmD58b4vk4yqC6DG_8Y0jcJO7vSCwD3A_5koAkxKrcZDKZsmrd4Oq81PmCA6IbxRfh-BlBcxV5LRIZMi_LoN6pryS1w"/>
+</div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Alex Rivera</span>
+<span class="text-sm text-slate-500">5 min read</span>
+</div>
+</div>
+</article>
+<article class="group cursor-pointer">
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
+<span>Machine Learning</span>
+<span class="w-1 h-1 rounded-full bg-slate-400"></span>
+<span class="text-slate-500 dark:text-slate-400">5h ago</span>
+</div>
+<h2 class="text-2xl font-bold leading-tight text-slate-900 dark:text-slate-50 group-hover:text-primary transition-colors">
+            Why Large Language Models are changing software architecture
+          </h2>
+<p class="text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-2">
+            Integrating LLMs isn't just about API calls; it's about rethinking data flow, caching, and deterministic vs probabilistic logic in your stack.
+          </p>
+<div class="flex items-center gap-4 mt-2">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of a software architect" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkNQ8WWu7MZ-lfHlPuIQXO6IaE5a6Tb17VfNDPi9mkYihwqN6vEH2tUmqSulN_AEhjCzycY5DpaY9KAujweOrxh-Cx70WM_-K28vwED0UDaF-GnGjnaDx9EWNnX__frVn6yWLHlXaaepZoV0VbNZTPHH1HUJH6g0XGfk6tGyj89PpgGeO9FiMyVYHOTjgMhFP0B8InGPrH6cF0bj-rwo_Re0R3bQYkita2r-2GarHPSVzGCob7tgHMFTVIIuiMyDGU-TlAejwnY-fZ"/>
+</div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Sarah Chen</span>
+<span class="text-sm text-slate-500">8 min read</span>
+</div>
+</div>
+</article>
+<article class="group cursor-pointer">
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
+<span>Neural Networks</span>
+<span class="w-1 h-1 rounded-full bg-slate-400"></span>
+<span class="text-slate-500 dark:text-slate-400">Yesterday</span>
+</div>
+<h2 class="text-2xl font-bold leading-tight text-slate-900 dark:text-slate-50 group-hover:text-primary transition-colors">
+            Efficient fine-tuning with LoRA: A practical guide
+          </h2>
+<p class="text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-2">
+            How to adapt massive models to your specific domain without breaking the bank on compute costs. Practical tips for engineers.
+          </p>
+<div class="flex items-center gap-4 mt-2">
+<div class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Portrait of an AI researcher" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDu60RwKcCnyn4cB7Y-1yvWZFaJbJ_SjEPgppcb0GKcWUEh0lHEYgfPISSqmxEM3zFiRQPvnLZE7ZG5FOZOIadWKPtI_qEpl3LEVmxFDhDd5_J_aRlByNZTLbonhz0sLWMuoO0ce0UFWg9W9Yp_ZtWHTLKuCk1NoBqooHuG0_IVim3YdC3sRkoWEZ8fBm-Fk3BsMvLgGz3Fs3z1uPv5S4c9ClGv7sX-13OE4psBWs_nGlS1hQIZB0FNrEnI-R3jx8yxS4_8TIQxIuqJ"/>
+</div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Jordan Smith</span>
+<span class="text-sm text-slate-500">12 min read</span>
+</div>
+</div>
+</article>
+</div>
+</main>
+<footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-background-light dark:bg-background-dark">
+<div class="flex justify-around items-center px-4 py-3">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-[10px] font-medium uppercase tracking-tighter">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 dark:text-slate-400" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="text-[10px] font-medium uppercase tracking-tighter">Explore</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 dark:text-slate-400" href="#">
+<span class="material-symbols-outlined">bookmark</span>
+<span class="text-[10px] font-medium uppercase tracking-tighter">Saved</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 dark:text-slate-400" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium uppercase tracking-tighter">Profile</span>
+</a>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ByteBrief - Tech News</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#197fe6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display transition-colors duration-300">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<header class="sticky top-0 z-50 flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-background-light/80 dark:bg-background-dark/80 px-4 py-4 backdrop-blur-md">
+<div class="flex flex-col">
+<span class="text-xs font-bold uppercase tracking-widest text-primary">ByteBrief</span>
+<h2 class="text-lg font-bold leading-tight tracking-tight">Monday, Oct 24</h2>
+</div>
+<div class="flex gap-2">
+<button class="flex h-10 w-10 items-center justify-center rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-[22px]">search</span>
+</button>
+<button class="flex h-10 w-10 items-center justify-center rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+<span class="material-symbols-outlined text-[22px]">account_circle</span>
+</button>
+</div>
+</header>
+<main class="flex-1 pb-24">
+<section class="px-4 pt-6 pb-2">
+<h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Top Headline</h1>
+</section>
+<div class="p-4 @container">
+<div class="group relative flex flex-col gap-4 overflow-hidden rounded-xl bg-slate-50 dark:bg-slate-900/50 p-1 border border-transparent hover:border-primary/30 transition-all">
+<div class="relative aspect-video w-full overflow-hidden rounded-lg bg-slate-200 dark:bg-slate-800">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" data-alt="Close up of M3 chip architecture on silicon wafer" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAueUARsowkCZi3Z6YfTDjPg-oifGbtcIqe6IdJyFiC9VZ6u_3M2x_GUgSZL2NluZu061CNSCECK6NRzm7zHZLPVw8N1VylHRjfXUHDNaI4ADNdamTTyMhi8iVRCXyOXI-jSkyEC6qkcrysUVZiV945fOBycQqgnMhsJ-UDcjRoN0qSMMcNoL6uHx5ZAQKQkJn100QxrF4YEQivv8wKmhoSAHHEeSAxkJIvAfawsn3nWUJXurIp9aPTCdIm5bjR_HTDkbX-cDUiRxEe");'>
+</div>
+<div class="absolute top-3 left-3">
+<span class="rounded-full bg-primary px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow-lg">Featured</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 p-3">
+<h3 class="text-xl font-bold leading-snug tracking-tight text-slate-900 dark:text-white">Apple Announces New M3 Chips for MacBook Pro</h3>
+<p class="line-clamp-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                            The latest silicon promises a 30% boost in efficiency and significantly improved gaming performance across the entire Pro lineup.
+                        </p>
+<div class="mt-2 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="h-5 w-5 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-[12px]">rss_feed</span>
+</div>
+<span class="text-xs font-semibold text-primary">The Verge</span>
+</div>
+<span class="text-[10px] font-medium text-slate-500">4m ago</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-6 px-4">
+<div class="flex flex-col gap-4 py-2 border-b border-slate-200 dark:border-slate-800/50">
+<div class="flex gap-4">
+<div class="flex flex-1 flex-col gap-1">
+<span class="text-[10px] font-bold uppercase tracking-wider text-primary">Policy</span>
+<h3 class="text-lg font-bold leading-tight text-slate-900 dark:text-white">AI Regulation: What the New Executive Order Means</h3>
+<p class="line-clamp-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                                The White House introduces comprehensive guidelines for safe and secure AI development, impacting major tech giants.
+                            </p>
+</div>
+<div class="h-24 w-24 shrink-0 overflow-hidden rounded-lg bg-slate-800">
+<div class="h-full w-full bg-cover bg-center" data-alt="Digital representation of artificial intelligence network" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDZp_PE09khvPxjFJj2-8Ocrbc7ykZim3R_m5TR4uNUFiJ2K1qkopLrDVpZmYecsPG2uSWNLZ0Fo50PkuU_R-PYWTLp0lI6iCc2RPe6J7KJfeIUNwxAx0vGVVe9RZgH0vargcJF79CHJqVIOwpsqyUNwuQzZ9QMBYNuHJVnUBg2SJ5R8HHjJQEXiuRcIT4yaSPXgd1MrfT61bTNK5uQyfkg5N1TLT0tRcN34kf1PE-WrQHC_wo0kEoucLPjFdoUs8SuBE4ke6XeHHdr");'>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-xs font-bold text-slate-800 dark:text-slate-200">TechCrunch</span>
+<span class="text-[10px] text-slate-500">• 2h ago</span>
+</div>
+</div>
+<div class="flex flex-col gap-4 py-2 border-b border-slate-200 dark:border-slate-800/50">
+<div class="flex gap-4">
+<div class="flex flex-1 flex-col gap-1">
+<span class="text-[10px] font-bold uppercase tracking-wider text-primary">Exploration</span>
+<h3 class="text-lg font-bold leading-tight text-slate-900 dark:text-white">Mars Rover Finds Compelling Evidence of Ancient Water</h3>
+<p class="line-clamp-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                                New rock samples analyzed by Perseverance suggest a long-lasting habitable environment existed in the Jezero Crater.
+                            </p>
+</div>
+<div class="h-24 w-24 shrink-0 overflow-hidden rounded-lg bg-slate-800">
+<div class="h-full w-full bg-cover bg-center" data-alt="Close up of Martian surface landscape" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC0k7UOd1XxBAYq0XCFZJYLSZEA-WrDg-ibz-tZW1P23x3bMHnE_FYMjWW6QXUAy5y4HBAQGosEX-JvgRmZRJuPWzo4Mq6A6Nl44JVJct-Y3mFv-TUFds9yGsNtefL_wxby4giz7RAJclzpzxUgSfdHaTx7JaX0Ny1cWAtPSROIHmmdiHo2Fwou0SzARgG-hflxzY1Pt5TypzsEdk93bzO_9V8lkAQa260fh5upbpG3TytZlNb6HGr8JGDLbawq6jIYbrGSziy9FmY-");'>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-xs font-bold text-slate-800 dark:text-slate-200">NASA News</span>
+<span class="text-[10px] text-slate-500">• 5h ago</span>
+</div>
+</div>
+<div class="flex flex-col gap-4 py-2">
+<div class="flex gap-4">
+<div class="flex flex-1 flex-col gap-1">
+<span class="text-[10px] font-bold uppercase tracking-wider text-primary">Gaming</span>
+<h3 class="text-lg font-bold leading-tight text-slate-900 dark:text-white">Nintendo Switch 2: Leaked Concept Art Surfaces</h3>
+<p class="line-clamp-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                                Industry insiders share detailed renders of what could be the next generation of handheld gaming consoles.
+                            </p>
+</div>
+<div class="h-24 w-24 shrink-0 overflow-hidden rounded-lg bg-slate-800">
+<div class="h-full w-full bg-cover bg-center" data-alt="Gamer holding a handheld console in dark room" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBtAcAEOMYdHlGbD4mysoxazBS5AEq9ZEicm1JN4FvZFG95d0KJePl6FPFw4hsXlBhpDYq0ydRoQPHMzfkSmZgwKCYz_hPr_ABrJlX34XF8THibUFcdCAHS6MEaOXuasQ7IoPlYfmk9kWtmk71X9Ngb33e7tFm7mNKMbaMZET7_OhhkiKqIsFJYB3tIac9gTD-Ilqzd-VG6sHoE6kirLdRf_ZsccZN-wsSHsoHuDfeSW5UgC3gVZW2wT3jxYCyuww9YgxEz3wctQCav");'>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-xs font-bold text-slate-800 dark:text-slate-200">IGN</span>
+<span class="text-[10px] text-slate-500">• 8h ago</span>
+</div>
+</div>
+</div>
+</main>
+<nav class="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around border-t border-slate-200 dark:border-slate-800 bg-background-light/95 dark:bg-background-dark/95 px-4 pb-6 pt-3 backdrop-blur-lg">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined fill-1" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-[10px] font-bold">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 dark:text-slate-400" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="text-[10px] font-medium">Discover</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 dark:text-slate-400" href="#">
+<span class="material-symbols-outlined">bookmarks</span>
+<span class="text-[10px] font-medium">Saved</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 dark:text-slate-400" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-medium">Settings</span>
+</a>
+</nav>
+</div>
+</body></html>
