@@ -29,6 +29,11 @@ const envSchema = z.object({
   FIREBASE_PRIVATE_KEY: z.string().optional(),
   FIREBASE_CLIENT_EMAIL: z.string().optional(),
   
+  // Admin
+  ADMIN_EMAILS: z.string().optional(),
+  WEB_BASE_URL: z.string().url().optional(),
+  DIGEST_CRON: z.string().default('0 8 * * *'),
+  
   // Caching
   CACHE_TTL: z.string().transform(Number).default('3600'),
   
