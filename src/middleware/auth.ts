@@ -66,4 +66,37 @@ export const optionalAuth = (
   }
 };
 
-export default { authenticate, optionalAuth };
+/**
+ * Admin-only middleware
+ * Check if the user is an admin based on email or role
+ */
+export const requireAdmin = (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction
+): void => {
+  // Check if user is authenticated
+  if (!req.user) {
+    res.status(401).json({
+      success: false,
+      message: 'Authentication required',
+    });
+    return;
+  }
+
+  // Check admin status - can be based on email whitelist or role in JWT
+  const adminEmails = (env.ADMIN_EMAILS || '').split(',').map(e => e.trim().toLowerCase());
+  const isAdmin = adminEmails.includes(req.user.email?.toLowerCase() || '');
+
+  if (!isAdmin) {
+    res.status(403).json({
+      success: false,
+      message: 'Admin access required',
+    });
+    return;
+  }
+
+  next();
+};
+
+export default { authenticate, optionalAuth, requireAdmin };
