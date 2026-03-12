@@ -12,9 +12,14 @@ import { initializeScheduler } from './jobs/scheduler';
 import routes from './routes';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 import { apiLimiter } from './middleware/rateLimit';
+import { compressionMiddleware } from './middleware/compression';
+import { advancedCache } from './services/cache/advancedCache';
 import { logger } from './utils/logger';
 
 const app = express();
+
+// Compression middleware (before other middlewares for best compression)
+app.use(compressionMiddleware);
 
 // Security middleware
 app.use(helmet({
@@ -69,6 +74,8 @@ const startServer = async (): Promise<void> => {
     
     try {
       await connectRedis();
+      // Initialize advanced cache with pub/sub for distributed invalidation
+      await advancedCache.initialize();
     } catch (error) {
       logger.warn('Redis connection failed, continuing without cache:', error);
     }
@@ -85,6 +92,7 @@ const startServer = async (): Promise<void> => {
     app.listen(env.PORT, () => {
       logger.info(`🚀 Server running on port ${env.PORT}`);
       logger.info(`📊 Environment: ${env.NODE_ENV}`);
+      logger.info(`⚡ Performance: Compression enabled, Redis caching active`);
     });
 
   } catch (error) {
