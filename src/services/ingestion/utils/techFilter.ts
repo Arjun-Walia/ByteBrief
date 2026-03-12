@@ -43,17 +43,20 @@ const TECH_KEYWORDS = {
     
     // Companies (tech-specific)
     'google', 'microsoft', 'apple', 'amazon', 'meta', 'facebook', 'nvidia',
-    'intel', 'amd', 'tesla', 'spacex', 'twitter', 'linkedin',
+    'intel', 'amd', 'tesla', 'spacex', 'twitter', 'linkedin', 'tiktok',
+    'samsung', 'huawei', 'xiaomi', 'bytedance', 'alibaba', 'netflix',
+    'uber', 'airbnb', 'spotify', 'snap', 'zoom', 'slack', 'dropbox',
     
     // Crypto/Blockchain
     'blockchain', 'cryptocurrency', 'bitcoin', 'ethereum', 'web3', 'nft', 'defi',
     
     // Mobile
-    'ios', 'android', 'mobile app', 'smartphone',
+    'ios', 'android', 'mobile app', 'smartphone', 'iphone', 'pixel', 'galaxy',
     
     // General Tech
     'technology', 'tech news', 'digital', 'internet', 'online', 'app',
-    'platform', 'saas', 'paas', 'iaas',
+    'platform', 'saas', 'paas', 'iaas', 'gadget', 'device', 'update',
+    'launch', 'release', 'feature', 'upgrade', 'software update',
   ],
   lowWeight: [
     // General terms that might indicate tech
@@ -83,7 +86,7 @@ const NON_TECH_INDICATORS = [
  * Filter articles to only tech-related content
  */
 export class TechFilter {
-  private readonly TECH_THRESHOLD = 0.3;
+  private readonly TECH_THRESHOLD = 0.15; // Lowered from 0.3 to get more news
 
   /**
    * Check if an article is tech-related

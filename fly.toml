@@ -1,0 +1,71 @@
+################################################################################
+# Fly.io Configuration - ByteBrief
+#
+# Deploy with: flyctl deploy
+# Docs: https://fly.io/docs/reference/configuration/
+################################################################################
+
+app = "bytebrief"
+primary_region = "iad"
+kill_signal = "SIGINT"
+kill_timeout = "5s"
+
+################################################################################
+# Build Configuration
+[build]
+  dockerfile = "Dockerfile"
+
+################################################################################
+# Environment Variables (non-sensitive)
+[env]
+  NODE_ENV = "production"
+  PORT = "3000"
+  LOG_LEVEL = "info"
+
+################################################################################
+# HTTP Service
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+  # Health checks
+  [http_service.concurrency]
+    type = "connections"
+    hard_limit = 100
+    soft_limit = 80
+
+  # HTTP checks for load balancer
+  [[http_service.checks]]
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "30s"
+    method = "GET"
+    path = "/api/health"
+
+################################################################################
+# Machine Configuration
+[[vm]]
+  memory = "512mb"
+  cpu_kind = "shared"
+  cpus = 1
+
+################################################################################
+# Processes
+[processes]
+  app = "node dist/app.js"
+
+################################################################################
+# Metrics (Prometheus)
+[metrics]
+  port = 9091
+  path = "/metrics"
+
+################################################################################
+# Statics (if serving static files)
+# [[statics]]
+#   guest_path = "/app/public"
+#   url_prefix = "/static/"

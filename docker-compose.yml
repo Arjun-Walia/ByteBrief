@@ -1,51 +1,110 @@
+################################################################################
+# ByteBrief - Docker Compose
+# Local development and testing environment
+################################################################################
+
 version: '3.8'
 
 services:
+  ############################################################################
+  # Application Service
   app:
     build:
       context: .
       dockerfile: Dockerfile
+      target: production
+    container_name: bytebrief-api
     ports:
-      - "3000:3000"
+      - "${PORT:-3000}:3000"
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=${NODE_ENV:-production}
       - PORT=3000
       - MONGODB_URI=mongodb://mongodb:27017/bytebrief
       - REDIS_URL=redis://redis:6379
     env_file:
       - .env
     depends_on:
-      - mongodb
-      - redis
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     restart: unless-stopped
     networks:
       - bytebrief-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
+  ############################################################################
+  # MongoDB Database
   mongodb:
     image: mongo:7
+    container_name: bytebrief-mongodb
     ports:
       - "27017:27017"
     volumes:
       - mongodb_data:/data/db
+      - ./scripts/mongo-init:/docker-entrypoint-initdb.d:ro
+    environment:
+      - MONGO_INITDB_DATABASE=bytebrief
     restart: unless-stopped
     networks:
       - bytebrief-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
+  ############################################################################
+  # Redis Cache
   redis:
     image: redis:7-alpine
+    container_name: bytebrief-redis
     ports:
       - "6379:6379"
     volumes:
       - redis_data:/data
-    command: redis-server --appendonly yes
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
     restart: unless-stopped
     networks:
       - bytebrief-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
+################################################################################
+# Volumes
 volumes:
   mongodb_data:
+    driver: local
   redis_data:
+    driver: local
 
+################################################################################
+# Networks
 networks:
   bytebrief-network:
     driver: bridge

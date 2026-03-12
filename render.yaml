@@ -1,0 +1,70 @@
+################################################################################
+# Render.com Blueprint - ByteBrief
+#
+# Deploy with: Connect GitHub repo to Render
+# Docs: https://render.com/docs/blueprint-spec
+################################################################################
+
+services:
+  ##############################################################################
+  # Web Service - ByteBrief API
+  - type: web
+    name: bytebrief-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    
+    # Region (Oregon)
+    region: oregon
+    
+    # Instance type
+    plan: starter
+    
+    # Scaling
+    numInstances: 1
+    
+    # Health check
+    healthCheckPath: /api/health
+    
+    # Environment variables
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: MONGODB_URI
+        sync: false  # Set manually in dashboard
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: bytebrief-redis
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: OPENAI_API_KEY
+        sync: false  # Set manually in dashboard
+      - key: NEWSAPI_KEY
+        sync: false
+      - key: GNEWS_API_KEY
+        sync: false
+      - key: FIREBASE_PROJECT_ID
+        sync: false
+      - key: FIREBASE_PRIVATE_KEY
+        sync: false
+      - key: FIREBASE_CLIENT_EMAIL
+        sync: false
+      - key: AI_PROVIDER
+        value: openai
+
+    # Build settings
+    buildCommand: ""  # Dockerfile handles build
+    startCommand: ""  # Dockerfile handles start
+
+  ##############################################################################
+  # Redis Cache
+  - type: redis
+    name: bytebrief-redis
+    plan: starter
+    region: oregon
+    maxmemoryPolicy: allkeys-lru
+    ipAllowList: []  # Allow all IPs (Render internal network)

@@ -1,78 +1,88 @@
 import cron from 'node-cron';
 import { env } from '../config/env';
-import { ingestionOrchestrator } from '../services/ingestion/orchestrator';
-import { summarizationService } from '../services/processing/summarization';
-import { rankingService } from '../services/ranking/ranker';
-import { clusteringService } from '../services/clustering';
-import { pushService } from '../services/notification/pushService';
-import { cacheService } from '../services/cache/cacheService';
+import { pipelineOrchestrator, PipelineStage } from './pipeline';
 import { logger } from '../utils/logger';
 
 export const initializeScheduler = (): void => {
-  logger.info('Initializing scheduled jobs...');
+  logger.info('Initializing scheduled jobs with pipeline orchestrator...');
 
-  // Ingestion job - runs every 6 hours by default
+  // Main ingestion pipeline - runs every 6 hours by default
+  // Fetches news → Summarizes → Ranks → Clusters → Updates cache
   cron.schedule(env.INGESTION_CRON, async () => {
-    logger.info('Starting news ingestion job...');
+    logger.info('═'.repeat(60));
+    logger.info('[Scheduler] Starting scheduled ingestion pipeline...');
+    logger.info('═'.repeat(60));
+    
     try {
-      const result = await ingestionOrchestrator.runIngestion();
-      logger.info(`Ingestion complete: ${result.totalFetched} fetched, ${result.totalNew} new, ${result.totalDuplicates} duplicates`);
+      const result = await pipelineOrchestrator.runIngestionPipeline();
       
-      for (const sourceResult of result.sourceResults) {
-        logger.info(`  ${sourceResult.source}: ${sourceResult.fetched} fetched, ${sourceResult.new} stored`);
-      }
-
-      // Trigger summarization after ingestion
-      await summarizationService.summarizeUnsummarizedArticles();
+      logger.info(`[Scheduler] Ingestion pipeline completed: ${result.status}`);
+      logger.info(`[Scheduler] Summary: ${result.summary.successfulStages}/${result.summary.totalStages} stages successful`);
+      logger.info(`[Scheduler] Items processed: ${result.summary.totalItemsProcessed}`);
+      logger.info(`[Scheduler] Duration: ${(result.totalDuration / 1000).toFixed(1)}s`);
     } catch (error) {
-      logger.error('Ingestion job failed:', error);
+      logger.error('[Scheduler] Ingestion pipeline failed:', error);
     }
   });
 
-  // Ranking job - runs every 6 hours by default
+  // Ranking pipeline - runs every 6 hours by default (offset from ingestion)
+  // Re-ranks articles → Updates clusters → Clears cache
   cron.schedule(env.RANKING_CRON, async () => {
-    logger.info('Starting ranking job...');
+    logger.info('═'.repeat(60));
+    logger.info('[Scheduler] Starting scheduled ranking pipeline...');
+    logger.info('═'.repeat(60));
+    
     try {
-      const count = await rankingService.rankAllArticles();
-      logger.info(`Ranking complete: ${count} articles ranked`);
+      const result = await pipelineOrchestrator.runRankingPipeline();
       
-      // Run clustering after ranking
-      logger.info('Starting article clustering...');
-      const clusterResult = await clusteringService.runClustering();
-      logger.info(
-        `Clustering complete: ${clusterResult.clustersCreated} clusters, ` +
-        `${clusterResult.articlesAssigned} articles assigned`
-      );
-      
-      // Clear article caches after re-ranking
-      await cacheService.deletePattern('articles:*');
+      logger.info(`[Scheduler] Ranking pipeline completed: ${result.status}`);
+      logger.info(`[Scheduler] Summary: ${result.summary.successfulStages}/${result.summary.totalStages} stages successful`);
     } catch (error) {
-      logger.error('Ranking job failed:', error);
+      logger.error('[Scheduler] Ranking pipeline failed:', error);
     }
   });
 
-  // Daily notification job - runs at 8 AM by default
+  // Daily notification pipeline - runs at 8 AM by default
+  // Sends daily digest to subscribed users
   cron.schedule(env.NOTIFICATION_CRON, async () => {
-    logger.info('Starting daily notification job...');
+    logger.info('═'.repeat(60));
+    logger.info('[Scheduler] Starting scheduled notification pipeline...');
+    logger.info('═'.repeat(60));
+    
     try {
-      await pushService.sendDailyDigest();
+      const result = await pipelineOrchestrator.runNotificationPipeline();
+      
+      logger.info(`[Scheduler] Notification pipeline completed: ${result.status}`);
     } catch (error) {
-      logger.error('Notification job failed:', error);
+      logger.error('[Scheduler] Notification pipeline failed:', error);
     }
   });
 
   // Cache cleanup job - runs at 2 AM daily
   cron.schedule(env.CLEANUP_CRON, async () => {
-    logger.info('Starting cache cleanup job...');
+    logger.info('[Scheduler] Starting scheduled cache cleanup...');
+    
     try {
-      await cacheService.deletePattern('*');
-      logger.info('Cache cleared');
+      const result = await pipelineOrchestrator.run({
+        stages: [PipelineStage.CACHE],
+      });
+      
+      logger.info(`[Scheduler] Cache cleanup completed: ${result.status}`);
     } catch (error) {
-      logger.error('Cache cleanup job failed:', error);
+      logger.error('[Scheduler] Cache cleanup failed:', error);
     }
   });
 
-  logger.info('Scheduled jobs initialized');
+  // Log next scheduled runs
+  logger.info('─'.repeat(60));
+  logger.info('[Scheduler] Scheduled jobs configured:');
+  logger.info(`  • Ingestion pipeline: ${env.INGESTION_CRON}`);
+  logger.info(`  • Ranking pipeline: ${env.RANKING_CRON}`);
+  logger.info(`  • Notification pipeline: ${env.NOTIFICATION_CRON}`);
+  logger.info(`  • Cache cleanup: ${env.CLEANUP_CRON}`);
+  logger.info('─'.repeat(60));
+  
+  logger.info('[Scheduler] All scheduled jobs initialized');
 };
 
 export default { initializeScheduler };
