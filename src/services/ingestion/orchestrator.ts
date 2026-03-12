@@ -13,6 +13,9 @@ import { deduplicationService } from './utils/deduplication';
 import { contentNormalizer } from './utils/normalizer';
 import { techFilter } from './utils/techFilter';
 
+// Import cache for invalidation on new articles
+import { advancedCache } from '../cache/advancedCache';
+
 /**
  * Main news ingestion orchestrator
  * Coordinates fetching from multiple sources, deduplication, and storage
@@ -51,6 +54,12 @@ export class IngestionOrchestrator {
       const totalNew = sourceResults.reduce((sum, r) => sum + r.new, 0);
       const totalDuplicates = sourceResults.reduce((sum, r) => sum + r.duplicates, 0);
       const totalErrors = sourceResults.reduce((sum, r) => sum + r.errors, 0);
+
+      // Invalidate article caches if new articles were added
+      if (totalNew > 0) {
+        logger.info(`Invalidating caches after ${totalNew} new articles...`);
+        await advancedCache.invalidateArticleCaches(`${totalNew} new articles ingested`);
+      }
 
       const endTime = new Date();
       const result: IngestionRunResult = {

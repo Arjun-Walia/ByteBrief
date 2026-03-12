@@ -1,8 +1,17 @@
 import { Request, Response, NextFunction } from 'express';
 import { Article, Category } from '../models';
-import { cacheService, CacheService } from '../services/cache/cacheService';
+import { advancedCache, AdvancedCacheService } from '../services/cache/advancedCache';
 import { ApiResponse, PaginatedResponse, ArticleDTO, ArticleDetailDTO, NotFoundError } from '../types';
 import { logger } from '../utils/logger';
+
+// Cache TTL constants (in seconds)
+const CACHE_TTL = {
+  FEED: 600,      // 10 minutes for news feeds
+  TOP: 600,       // 10 minutes for top articles
+  CATEGORY: 600,  // 10 minutes for category feeds
+  ARTICLE: 1800,  // 30 minutes for individual articles
+  SEARCH: 300,    // 5 minutes for search results
+};
 
 const toArticleDTO = (article: InstanceType<typeof Article>): ArticleDTO => ({
   id: article._id.toString(),
@@ -31,10 +40,11 @@ export const getArticles = async (
     const limit = Math.min(50, Math.max(1, parseInt(req.query.limit as string) || 20));
     const skip = (page - 1) * limit;
 
-    // Check cache
-    const cacheKey = CacheService.keys.articles(page, limit);
-    const cached = await cacheService.get<PaginatedResponse<ArticleDTO>>(cacheKey);
+    // Check cache (10-minute TTL)
+    const cacheKey = AdvancedCacheService.keys.articles(page, limit);
+    const cached = await advancedCache.get<PaginatedResponse<ArticleDTO>>(cacheKey);
     if (cached) {
+      res.setHeader('X-Cache', 'HIT');
       res.json({ success: true, data: cached });
       return;
     }
@@ -44,12 +54,13 @@ export const getArticles = async (
         .sort({ publishedAt: -1, score: -1 })
         .skip(skip)
         .limit(limit)
-        .populate('category', 'name slug'),
+        .populate('category', 'name slug')
+        .lean(), // Use lean() for faster read-only queries
       Article.countDocuments(),
     ]);
 
     const response: PaginatedResponse<ArticleDTO> = {
-      data: articles.map(toArticleDTO),
+      data: articles.map(toArticleDTO as (article: unknown) => ArticleDTO),
       pagination: {
         page,
         limit,
@@ -59,7 +70,8 @@ export const getArticles = async (
       },
     };
 
-    await cacheService.set(cacheKey, response, 300); // 5 min cache
+    await advancedCache.set(cacheKey, response, CACHE_TTL.FEED);
+    res.setHeader('X-Cache', 'MISS');
     res.json({ success: true, data: response });
   } catch (error) {
     next(error);
@@ -74,23 +86,26 @@ export const getTopArticles = async (
   try {
     const limit = Math.min(20, Math.max(1, parseInt(req.query.limit as string) || 10));
 
-    // Check cache
-    const cacheKey = CacheService.keys.topArticles();
-    const cached = await cacheService.get<ArticleDTO[]>(cacheKey);
+    // Check cache (10-minute TTL)
+    const cacheKey = AdvancedCacheService.keys.topArticles(limit);
+    const cached = await advancedCache.get<ArticleDTO[]>(cacheKey);
     if (cached) {
-      res.json({ success: true, data: cached.slice(0, limit) });
+      res.setHeader('X-Cache', 'HIT');
+      res.json({ success: true, data: cached });
       return;
     }
 
     const articles = await Article.find()
       .sort({ score: -1, publishedAt: -1 })
-      .limit(20)
-      .populate('category', 'name slug');
+      .limit(limit)
+      .populate('category', 'name slug')
+      .lean();
 
-    const data = articles.map(toArticleDTO);
-    await cacheService.set(cacheKey, data, 600); // 10 min cache
+    const data = (articles as unknown[]).map(toArticleDTO as (article: unknown) => ArticleDTO);
+    await advancedCache.set(cacheKey, data, CACHE_TTL.TOP);
 
-    res.json({ success: true, data: data.slice(0, limit) });
+    res.setHeader('X-Cache', 'MISS');
+    res.json({ success: true, data });
   } catch (error) {
     next(error);
   }
@@ -104,10 +119,11 @@ export const getArticleById = async (
   try {
     const { id } = req.params;
 
-    // Check cache
-    const cacheKey = CacheService.keys.articleById(id);
-    const cached = await cacheService.get<ArticleDetailDTO>(cacheKey);
+    // Check cache (30-minute TTL for individual articles)
+    const cacheKey = AdvancedCacheService.keys.articleById(id);
+    const cached = await advancedCache.get<ArticleDetailDTO>(cacheKey);
     if (cached) {
+      res.setHeader('X-Cache', 'HIT');
       res.json({ success: true, data: cached });
       return;
     }
@@ -127,7 +143,8 @@ export const getArticleById = async (
       bookmarkCount: article.bookmarkCount,
     };
 
-    await cacheService.set(cacheKey, data, 1800); // 30 min cache
+    await advancedCache.set(cacheKey, data, CACHE_TTL.ARTICLE);
+    res.setHeader('X-Cache', 'MISS');
     res.json({ success: true, data });
   } catch (error) {
     next(error);
@@ -145,10 +162,11 @@ export const getArticlesByCategory = async (
     const limit = Math.min(50, Math.max(1, parseInt(req.query.limit as string) || 20));
     const skip = (page - 1) * limit;
 
-    // Check cache
-    const cacheKey = CacheService.keys.articlesByCategory(slug, page);
-    const cached = await cacheService.get<PaginatedResponse<ArticleDTO>>(cacheKey);
+    // Check cache (10-minute TTL)
+    const cacheKey = AdvancedCacheService.keys.articlesByCategory(slug, page, limit);
+    const cached = await advancedCache.get<PaginatedResponse<ArticleDTO>>(cacheKey);
     if (cached) {
+      res.setHeader('X-Cache', 'HIT');
       res.json({ success: true, data: cached });
       return;
     }
@@ -158,12 +176,13 @@ export const getArticlesByCategory = async (
         .sort({ publishedAt: -1, score: -1 })
         .skip(skip)
         .limit(limit)
-        .populate('category', 'name slug'),
+        .populate('category', 'name slug')
+        .lean(),
       Article.countDocuments({ categorySlug: slug }),
     ]);
 
     const response: PaginatedResponse<ArticleDTO> = {
-      data: articles.map(toArticleDTO),
+      data: (articles as unknown[]).map(toArticleDTO as (article: unknown) => ArticleDTO),
       pagination: {
         page,
         limit,
@@ -173,7 +192,8 @@ export const getArticlesByCategory = async (
       },
     };
 
-    await cacheService.set(cacheKey, response, 300);
+    await advancedCache.set(cacheKey, response, CACHE_TTL.CATEGORY);
+    res.setHeader('X-Cache', 'MISS');
     res.json({ success: true, data: response });
   } catch (error) {
     next(error);
